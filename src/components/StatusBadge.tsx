@@ -1,16 +1,29 @@
 import { cn } from "@/lib/utils";
-import { statusLabel, type VidStatus } from "@/lib/vids";
+import { phaseLabel, phaseOf, phaseTone, waitSubs, type Phase } from "@/lib/pub";
+import type { Video } from "@/lib/vids";
 
-const tone: Record<VidStatus, string> = {
-  pendiente: "bg-warning/15 text-warning",
-  publicado: "bg-success/15 text-success",
-  error: "bg-destructive/15 text-destructive",
-};
-
-export function StatusBadge({ status }: { status: VidStatus }) {
+export function StatusBadge({ status }: { status: Phase }) {
   return (
-    <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium", tone[status])}>
-      {statusLabel[status]}
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
+        phaseTone[status],
+      )}
+    >
+      {phaseLabel[status]}
+    </span>
+  );
+}
+
+export function VidBadge({ vid }: { vid: Video }) {
+  return (
+    <span className="inline-flex flex-wrap items-center justify-end gap-1">
+      <StatusBadge status={phaseOf(vid)} />
+      {waitSubs(vid) && (
+        <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+          Esperando subtitulos
+        </span>
+      )}
     </span>
   );
 }

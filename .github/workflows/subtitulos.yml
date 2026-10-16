@@ -1,0 +1,65 @@
+name: Subtitulos
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: "Modo prueba sin subir ni actualizar la base"
+        type: boolean
+        default: false
+      batch:
+        description: "Videos por ejecucion"
+        type: string
+        default: "5"
+
+concurrency:
+  group: subtitulos
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  subtitulos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dryRun && 'true' || 'false' }}
+      BATCH: ${{ github.event_name == 'workflow_dispatch' && inputs.batch || '5' }}
+    steps:
+      - name: Comprobar secretos
+        id: cfg
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            echo "::warning::Faltan los secretos SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY, no se procesa nada"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.cfg.outputs.ok == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.cfg.outputs.ok == 'true'
+        with:
+          node-version: 22
+
+      - name: Instalar ffmpeg y fuentes
+        if: steps.cfg.outputs.ok == 'true'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends ffmpeg fonts-dejavu-core fontconfig
+          ffmpeg -hide_banner -version | head -n 1
+
+      - name: Pruebas
+        if: steps.cfg.outputs.ok == 'true'
+        run: node --test scripts/subtitulos/*.test.mjs
+
+      - name: Quemar subtitulos
+        if: steps.cfg.outputs.ok == 'true'
+        run: node scripts/subtitulos/index.mjs

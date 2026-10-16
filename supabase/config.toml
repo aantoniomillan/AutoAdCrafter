@@ -1,1 +1,4 @@
-project_id = "nnxvxqlplscwndzdbsui"
+project_id = "publi"
+
+[functions.publicar]
+verify_jwt = false

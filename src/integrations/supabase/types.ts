@@ -16,24 +16,33 @@ export type Database = {
     Tables: {
       accounts: {
         Row: {
+          checkedAt: string | null
           createdAt: string
           externalId: string
           id: string
+          lastError: string | null
           platform: string
+          status: string
           userId: string
         }
         Insert: {
+          checkedAt?: string | null
           createdAt?: string
           externalId: string
           id?: string
+          lastError?: string | null
           platform: string
+          status?: string
           userId?: string
         }
         Update: {
+          checkedAt?: string | null
           createdAt?: string
           externalId?: string
           id?: string
+          lastError?: string | null
           platform?: string
+          status?: string
           userId?: string
         }
         Relationships: []
@@ -59,10 +68,13 @@ export type Database = {
           createdAt: string
           error: string | null
           id: string
+          lockedAt: string | null
           path: string
+          processed: boolean
           publicUrl: string
           publishedAt: string | null
           scheduledAt: string
+          srcPath: string | null
           status: Database["public"]["Enums"]["video_status"]
           subtitleText: string
           userId: string
@@ -72,10 +84,13 @@ export type Database = {
           createdAt?: string
           error?: string | null
           id?: string
+          lockedAt?: string | null
           path: string
+          processed?: boolean
           publicUrl: string
           publishedAt?: string | null
           scheduledAt: string
+          srcPath?: string | null
           status?: Database["public"]["Enums"]["video_status"]
           subtitleText?: string
           userId?: string
@@ -85,10 +100,13 @@ export type Database = {
           createdAt?: string
           error?: string | null
           id?: string
+          lockedAt?: string | null
           path?: string
+          processed?: boolean
           publicUrl?: string
           publishedAt?: string | null
           scheduledAt?: string
+          srcPath?: string | null
           status?: Database["public"]["Enums"]["video_status"]
           subtitleText?: string
           userId?: string
@@ -100,7 +118,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      igTokenSet: {
+        Args: { accId: string }
+        Returns: boolean
+      }
     }
     Enums: {
       video_status: "pendiente" | "publicado" | "error"

@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { safeHrs } from "@/lib/pub";
 
 export type Video = Database["public"]["Tables"]["videos"]["Row"];
 export type VidStatus = Database["public"]["Enums"]["video_status"];
@@ -36,4 +37,10 @@ export async function listVids(statuses?: VidStatus[], limit?: number, upcoming 
   const { data, error } = await q;
   if (error) throw error;
   return data;
+}
+
+export async function loadHrs() {
+  const { data, error } = await supabase.from("settings").select("intervalHours").maybeSingle();
+  if (error) throw error;
+  return safeHrs(data?.intervalHours);
 }
