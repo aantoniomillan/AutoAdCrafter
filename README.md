@@ -245,6 +245,31 @@ delete from vault.secrets where name = 'ig_ID_DE_LA_FILA';
    select * from net._http_response order by created desc limit 10;
    ```
 
+## Videos automaticos
+
+La carpeta `video/` es un proyecto aparte (Remotion, con su propio `package.json`) que genera Reels de producto de 12 s, 1080x1920 a 30 fps y sin audio, para UtilsLA. El workflow `.github/workflows/reels.yml` los renderiza en GitHub Actions y no toca la app.
+
+Para encolar un video, crea `video/cola/<id>.json` y haz push a `main`:
+
+```json
+{
+  "titulo": "Proyector de aurora boreal",
+  "subtitulo": "Tu habitacion, otro cielo",
+  "precio": "29,95 €",
+  "precioAntes": "39,95 €",
+  "imagenes": ["https://.../foto1.jpg", "https://.../foto2.jpg"],
+  "puntos": ["16 colores y 4 efectos", "Recargable por USB-C", "Con mando a distancia"],
+  "cta": "Consiguelo en la coleccion Halloween",
+  "tema": "halloween"
+}
+```
+
+- `id` es el nombre del archivo: solo minusculas, numeros, guion y guion bajo. `precioAntes` es opcional. `tema` puede ser `halloween`, `navidad` o `neutro`. Las imagenes deben ser URL https; las que no se descarguen se omiten, y sin ninguna valida el trabajo falla.
+- El workflow renderiza cada trabajo que no tenga `video/salida/<id>.json`, sube el mp4 como asset de la release `reels` (la crea si no existe) y hace commit de `video/salida/<id>.json` con `{id, url, fecha, segundos}`. Los mp4 no se commitean.
+- Para volver a generar un video, borra su `video/salida/<id>.json` (o cambia el id) y haz push. Tambien se puede lanzar a mano desde Actions > Reels > Run workflow.
+- La `url` de salida es publica solo si el repositorio es publico; con un repositorio privado Instagram no podra descargarla.
+- En local: `cd video && npm install && npx remotion studio src/index.ts` para previsualizar, y `BROWSER_EXECUTABLE=/ruta/a/chrome node render.mjs --local <id>` para renderizar sin subir nada (el mp4 queda en `video/out/`).
+
 ## Desarrollo y pruebas
 
 ```sh

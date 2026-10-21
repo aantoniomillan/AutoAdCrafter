@@ -30,3 +30,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Videos
+video/node_modules
+video/out
+video/*.mp4
+video/salida/*.mp4

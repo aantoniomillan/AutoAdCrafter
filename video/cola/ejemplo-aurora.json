@@ -1,0 +1,13 @@
+{
+  "id": "ejemplo-aurora",
+  "titulo": "Proyector de aurora boreal",
+  "subtitulo": "Tu habitación, otro cielo",
+  "precio": "29,95 €",
+  "imagenes": [
+    "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Rechargeable_20Northern_20Lights_20LED_20Projector_20Boralamp_20InnovaGoods.jpg?v=1792624772",
+    "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Rechargeable_20Northern_20Lights_20LED_20Projector_20Boralamp_20InnovaGoods_0.jpg?v=1792624771"
+  ],
+  "puntos": ["16 colores y 4 efectos", "Recargable por USB-C", "Con mando a distancia"],
+  "cta": "Consíguelo en la colección Halloween",
+  "tema": "halloween"
+}
