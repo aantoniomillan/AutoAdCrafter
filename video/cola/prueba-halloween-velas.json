@@ -1,0 +1,18 @@
+{
+  "id": "prueba-halloween-velas",
+  "titulo": "¿Una vela de verdad dentro de la calabaza?",
+  "subtitulo": "Mejor luz sin fuego",
+  "precio": "19,95 €",
+  "imagenes": [
+    "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units_0.jpg",
+    "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units.jpg",
+    "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units_1.jpg"
+  ],
+  "puntos": [
+    "Llama que parpadea, sin fuego",
+    "12 velas con pilas incluidas",
+    "Unas 70 horas de luz cada una"
+  ],
+  "cta": "Ilumina tus calabazas este Halloween",
+  "tema": "halloween"
+}
