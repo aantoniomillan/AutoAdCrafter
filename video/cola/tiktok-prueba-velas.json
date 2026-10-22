@@ -1,0 +1,53 @@
+{
+  "id": "tiktok-prueba-velas",
+  "formato": "tiktok",
+  "precio": "19,95 €",
+  "cta": "Enlace en el perfil",
+  "escenas": [
+    {
+      "texto": "NO pongas una vela de verdad en tu calabaza",
+      "resaltar": "NO",
+      "efecto": "temblor",
+      "segundos": 1.8
+    },
+    {
+      "texto": "Fuego + calabaza + disfraz de poliéster...",
+      "resaltar": "poliéster",
+      "segundos": 1.6
+    },
+    {
+      "texto": "...no acaba bien",
+      "resaltar": "bien",
+      "efecto": "punch",
+      "segundos": 1.2
+    },
+    {
+      "texto": "Haz esto",
+      "resaltar": "esto",
+      "imagen": "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units_0.jpg",
+      "efecto": "zoom",
+      "segundos": 1.6
+    },
+    {
+      "texto": "Parpadean como una llama de verdad",
+      "resaltar": "llama",
+      "imagen": "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units.jpg",
+      "efecto": "paneo",
+      "segundos": 1.8
+    },
+    {
+      "texto": "Sin fuego, sin cera, sin humo",
+      "resaltar": "Sin fuego",
+      "imagen": "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units_1.jpg",
+      "efecto": "punch",
+      "segundos": 1.6
+    },
+    {
+      "texto": "12 velas, pilas incluidas",
+      "resaltar": "12",
+      "imagen": "https://cdn.shopify.com/s/files/1/1009/1079/3031/files/Set_20of_20LED_20Tealight_20Candles_20Romandle_20InnovaGoods_2012_20Units_2.jpg",
+      "efecto": "zoom",
+      "segundos": 1.6
+    }
+  ]
+}

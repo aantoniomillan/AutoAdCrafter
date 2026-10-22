@@ -52,6 +52,45 @@ const leerTrabajo = (id) => {
   return props;
 };
 
+const efectosTiktok = ["temblor", "zoom", "paneo", "punch"];
+
+const leerTrabajoTiktok = (id, crudo) => {
+  if (!patronId.test(id)) throw new Error("el id solo admite minusculas, numeros, guion y guion bajo");
+  if (!texto(crudo.precio)) throw new Error("falta el precio");
+  if (!Array.isArray(crudo.escenas) || crudo.escenas.length === 0) throw new Error("faltan las escenas");
+  const escenas = crudo.escenas.map((e, i) => {
+    if (!texto(e?.texto)) throw new Error(`la escena ${i + 1} no tiene texto`);
+    const segundos = Number(e.segundos);
+    const escena = {
+      texto: texto(e.texto),
+      segundos: Number.isFinite(segundos) ? Math.min(3, Math.max(0.8, segundos)) : 1.4,
+    };
+    if (texto(e.resaltar)) escena.resaltar = texto(e.resaltar);
+    if (texto(e.imagen) && urlValida(texto(e.imagen))) escena.imagen = texto(e.imagen);
+    if (efectosTiktok.includes(e.efecto)) escena.efecto = e.efecto;
+    return escena;
+  });
+  return {
+    id,
+    formato: "tiktok",
+    precio: texto(crudo.precio),
+    escenas,
+    cta: texto(crudo.cta) || "Enlace en el perfil",
+  };
+};
+
+const filtrarEscenasTiktok = async (props) => {
+  const escenas = await Promise.all(
+    props.escenas.map(async (e) => {
+      if (!e.imagen || (await imagenAccesible(e.imagen))) return e;
+      console.log(`${props.id}: se omite la imagen ${e.imagen}`);
+      const { imagen, ...resto } = e;
+      return resto;
+    }),
+  );
+  return { ...props, escenas };
+};
+
 const imagenAccesible = async (url) => {
   const control = new AbortController();
   const limite = setTimeout(() => control.abort(), 25000);
@@ -137,10 +176,14 @@ let fallos = 0;
 
 for (const id of pendientes) {
   try {
-    const props = await filtrarImagenes(leerTrabajo(id));
+    const crudo = JSON.parse(readFileSync(path.join(dirCola, `${id}.json`), "utf8"));
+    const tiktok = crudo.formato === "tiktok";
+    const props = tiktok
+      ? await filtrarEscenasTiktok(leerTrabajoTiktok(id, crudo))
+      : await filtrarImagenes(leerTrabajo(id));
     const composition = await selectComposition({
       serveUrl,
-      id: "Reel",
+      id: tiktok ? "Tiktok" : "Reel",
       inputProps: props,
       browserExecutable: navegador,
     });
